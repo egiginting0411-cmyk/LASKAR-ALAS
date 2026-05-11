@@ -1,0 +1,97 @@
+/* Ubah warna background utama sidebar */
+.left-sidebar {
+    background-color: #06923E !important; /* dark slate */
+    border-right: none !important;
+    box-shadow: none !important;
+}
+
+
+/* Ubah warna teks menu */
+.left-sidebar .sidebar-item a {
+    color: #ffffff !important; /* putih kebiruan */
+}
+
+/* Ubah warna teks icon */
+.left-sidebar .sidebar-item a i {
+    color: #ffffff !important; /* abu soft */
+}
+
+/* Warna hover item */
+.left-sidebar .sidebar-item a:hover {
+    background-color: #2aa15a !important; /* abu gelap */
+    color: #ffffff !important; /* biru terang */
+}
+
+/* Warna label section (Home, UI COMPONENTS, dsb) */
+.left-sidebar .nav-small-cap {
+    color: #ffffff !important;
+}
+
+/* Sidebar menu item aktif */
+.left-sidebar .sidebar-item.active > .sidebar-link {
+    background-color: #2aa15a !important; /* hijau hover */
+    color: #ffffff !important;            /* teks putih */
+    border-radius: 6px;                   /* opsional: biar agak rounded */
+}
+
+/* Icon dalam menu aktif */
+.left-sidebar .sidebar-item.active > .sidebar-link i {
+    color: #ffffff !important;
+}
+
+/* Pastikan teks di dalam menu aktif ikut putih */
+.left-sidebar .sidebar-item.active > .sidebar-link .hide-menu {
+    color: #ffffff !important;
+}
+
+
+/* Header selaras dengan sidebar */
+.app-header {
+    background-color: #06923E !important; /* sama dengan sidebar */
+    color: #f8fafc !important;
+}
+
+/* Warna ikon di header */
+.app-header .navbar .nav-link,
+.app-header .navbar .nav-link i {
+    color: #f8fafc !important;
+}
+
+/* Notifikasi dot */
+.app-header .navbar .notification {
+    background-color: #ffffff !important; /* putih biar kontras */
+}
+
+/* Hover link header */
+.app-header .navbar .nav-link:hover {
+    color: #d1fae5 !important; /* hijau muda */
+}
+
+/* Dropdown menu */
+.app-header .dropdown-menu {
+    background-color: #06923E !important; /* hijau hover sidebar */
+    border: none;
+}
+
+.app-header .dropdown-menu .dropdown-item {
+    color: #ffffff !important;
+}
+
+.app-header .dropdown-menu .dropdown-item:hover {
+    background-color: #2aa15a !important;
+    color: #d1fae5 !important;
+}
+
+/* Tombol Download / Logout biar seragam */
+.app-header .btn-primary,
+.app-header .btn-outline-primary {
+    background-color: #4a8d49 !important;
+    border-color: #4a8d49 !important;
+    color: #fff !important;
+}
+
+.app-header .btn-primary:hover,
+.app-header .btn-outline-primary:hover {
+    background-color: #2f8018 !important;
+    border-color: #2f8018 !important;
+}
