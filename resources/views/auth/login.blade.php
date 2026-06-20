@@ -19,7 +19,8 @@
     .card .form-label,
     .card .form-check-label,
     .card a,
-    .card p {
+    .card p,
+    .card h4 {
         color: #fff !important;
     }
 
@@ -66,9 +67,10 @@
                         <div class="card mb-0">
                             <div class="card-body">
                                 <a href="#" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                    <img src="{{asset('assets/images/logos/image.png')}}" width="180" alt="">
+                                    <img src="{{asset('assets/images/logos/image.png')}}" width="280" alt="">
                                 </a>
-                                <p class="text-center">Login ke Sistem</p>
+                                <h4 class="text-center fw-bold mb-1">Sistem Logbook Polisi Hutan</h4>
+                                <p class="text-center mb-4" style="font-size: 0.85rem; opacity: 0.85;">Masuk ke akun Anda</p>
 
                                 <!-- Session Status -->
                                 @if (session('status'))
@@ -80,7 +82,7 @@
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">Email / Username</label>
+                                        <label for="email" class="form-label">Email</label>
                                         <input type="email" name="email" id="email"
                                             class="form-control @error('email') is-invalid @enderror"
                                             value="{{ old('email') }}" required autofocus>
@@ -118,9 +120,8 @@
                                     </button>
 
                                     @if (Route::has('register'))
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <p class="fs-6 mb-0 fw-bold">Belum punya akun?</p>
-                                        <a class="text-primary fw-bold ms-2" href="{{ route('register') }}">Daftar</a>
+                                    <div class="text-center mt-3">
+                                        <p class="mb-0" style="font-size: 0.95rem;">Belum punya akun? <a class="text-decoration-underline fw-semibold" href="{{ route('register') }}">Daftar sekarang</a></p>
                                     </div>
                                     @endif
                                 </form>

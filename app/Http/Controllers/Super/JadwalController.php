@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Super;
 use App\Http\Controllers\Controller;
 use App\Models\Jadwal;
 use App\Models\Pegawai;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -95,5 +96,20 @@ class JadwalController extends Controller
         return redirect()
             ->route('jadwal.index')
             ->with('success', 'Jadwal berhasil dihapus');
+    }
+
+    public function exportPdf()
+    {
+        $jadwal = Jadwal::with(['pegawai.user', 'pegawai.rph'])
+            ->orderBy('tanggal')
+            ->orderBy('waktu')
+            ->get();
+
+        $pdf = Pdf::loadView(
+            'pages.super.jadwal.pdf',
+            ['jadwal' => $jadwal]
+        )->setPaper('a4', 'landscape');
+
+        return $pdf->stream('jadwal-polhut.pdf');
     }
 }

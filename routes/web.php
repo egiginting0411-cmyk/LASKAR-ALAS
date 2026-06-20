@@ -59,6 +59,7 @@ Route::middleware(['auth', 'role:super'])->group(function () {
         Route::get('/jadwal/{id}/edit', [JadwalController::class, 'edit'])->name('jadwal.edit');
         Route::put('/jadwal/{id}', [JadwalController::class, 'update'])->name('jadwal.update');
         Route::delete('/jadwal/{id}', [JadwalController::class, 'delete'])->name('jadwal.delete');
+        Route::get('/jadwal/export/pdf', [JadwalController::class, 'exportPdf'])->name('jadwal.exportPdf');
 
         //BKPH Rogojampi
         Route::get('/bkphrogojampi', [BKPHController::class, 'index'])->name('bkphrogojampi.index');
@@ -136,6 +137,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/jadwal/{id}/edit', [AdminJadwalController::class, 'edit'])->name('jadwalbkph.edit');
         Route::put('/jadwal/{id}', [AdminJadwalController::class, 'update'])->name('jadwalbkph.update');
         Route::delete('/jadwal/{id}', [AdminJadwalController::class, 'delete'])->name('jadwalbkph.delete');
+        Route::get('/jadwal/export/pdf', [AdminJadwalController::class, 'exportPdf'])->name('jadwalbkph.exportPdf');
     });
 });
 

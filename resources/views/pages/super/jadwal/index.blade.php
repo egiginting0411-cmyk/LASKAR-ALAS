@@ -19,9 +19,14 @@
             <div class="card-body p-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="card-title fw-semibold mb-0">Data Jadwal</h5>
-                    <a href="{{ route('jadwal.create') }}" class="btn btn-tambah">
-                        <i class="ti ti-plus"></i> Tambah Jadwal
-                    </a>
+                    <div>
+                        <a href="{{ route('jadwal.exportPdf') }}" class="btn btn-danger" target="_blank">
+                            <i class="ti ti-file-type-pdf"></i> Export PDF
+                        </a>
+                        <a href="{{ route('jadwal.create') }}" class="btn btn-tambah">
+                            <i class="ti ti-plus"></i> Tambah Jadwal
+                        </a>
+                    </div>
                 </div>
 
                 <div class="table-responsive">

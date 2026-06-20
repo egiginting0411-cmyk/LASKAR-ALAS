@@ -7,6 +7,7 @@ use App\Models\BKPH;
 use App\Models\Jadwal;
 use App\Models\Pegawai;
 use App\Models\RPH;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -100,5 +101,20 @@ class JadwalController extends Controller
         return redirect()
             ->route('jadwalbkph.index')
             ->with('success', 'Jadwal berhasil dihapus');
+    }
+
+    public function exportPdf()
+    {
+        $jadwal = Jadwal::with(['pegawai.user', 'pegawai.rph'])
+            ->orderBy('tanggal')
+            ->orderBy('waktu')
+            ->get();
+
+        $pdf = Pdf::loadView(
+            'pages.admin.jadwal.pdf',
+            ['jadwal' => $jadwal]
+        )->setPaper('a4', 'landscape');
+
+        return $pdf->stream('jadwal-polhut.pdf');
     }
 }
