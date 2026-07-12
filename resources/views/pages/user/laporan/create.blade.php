@@ -58,6 +58,7 @@
                         <div class="col-md-6">
                             <label for="tanggal" class="form-label">Tanggal</label>
                             <input type="date" name="tanggal" id="tanggal"
+                                value="{{ $now->format('Y-m-d') }}"
                                 class="form-control @error('tanggal') is-invalid @enderror" required>
                             @error('tanggal') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>
@@ -65,16 +66,16 @@
                         <div class="col-md-6">
                             <label for="waktu" class="form-label">Waktu</label>
                             <input type="time" name="waktu" id="waktu"
+                                value="{{ $now->format('H:i') }}"
                                 class="form-control @error('waktu') is-invalid @enderror" required>
                             @error('waktu') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>
                     </div>
 
+                    <input type="hidden" name="sektor" value="{{ $rph->sektor ?? '' }}">
                     <div class="mb-3">
-                        <label for="sektor" class="form-label">RPH</label>
-                        <input type="text" name="sektor" id="sektor"
-                            class="form-control @error('sektor') is-invalid @enderror" required>
-                        @error('sektor') <div class="text-danger">{{ $message }}</div> @enderror
+                        <label class="form-label">RPH</label>
+                        <input type="text" class="form-control" value="{{ $rph->sektor ?? '' }}" disabled>
                     </div>
 
                     <div class="mb-3">

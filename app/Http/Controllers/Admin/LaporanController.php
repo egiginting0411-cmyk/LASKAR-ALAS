@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\BKPH;
 use App\Models\Laporan;
 use App\Models\RPH;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,14 +63,52 @@ class LaporanController extends Controller
 
         $namaPembuat = $laporan->first()->pegawai->user->name ?? '-';
 
-        $pdf = Pdf::loadView(
-            'pages.admin.laporan.pdf',
-            [
-                'laporan' => $laporan,
-                'namaPembuat' => $namaPembuat
-            ]
-        )->setPaper('a4', 'landscape');
+        // Cari KPH berdasarkan RPH yang terkait dengan pegawai ini
+        $rph = \App\Models\RPH::where('pegawai_id', $pegawaiId)->first();
+        $bkph = $rph ? $rph->bkph : null;
+        $daerah = $bkph ? $bkph->daerah_bkph : null;
 
-        return $pdf->stream('laporan.pdf');
+        // Data KPH berdasarkan daerah_bkph
+        $kphData = [
+            'Rogojampi' => [
+                'nama' => 'Banyuwangi Barat',
+                'alamat' => 'Jl. Jaksa Agung Soeprapto No. 34, Penganjuran, Kec. Banyuwangi, Kabupaten Banyuwangi, Jawa Timur 68411',
+                'telepon' => '(0333) 424327',
+                'fax' => '(0333) 421649',
+                'email' => 'kph.banyuwangibarat@perhutani.co.id',
+            ],
+            'Licin' => [
+                'nama' => 'Banyuwangi Utara',
+                'alamat' => 'Jl. Jaksa Agung Soeprapto No. 34, Penganjuran, Kec. Banyuwangi, Kabupaten Banyuwangi, Jawa Timur 68411',
+                'telepon' => '(0333) 421794',
+                'fax' => '(0333) 421649',
+                'email' => 'kph.banyuwangiutara@perhutani.co.id',
+            ],
+            'Glenmore' => [
+                'nama' => 'Banyuwangi Selatan',
+                'alamat' => 'Jl. Jaksa Agung Soeprapto No. 34, Penganjuran, Kec. Banyuwangi, Kabupaten Banyuwangi, Jawa Timur 68411',
+                'telepon' => '(0333) 421649',
+                'fax' => '(0333) 411993',
+                'email' => 'kph.banyuwangiselatan@perhutani.co.id',
+            ],
+            'Sempu' => [
+                'nama' => 'Banyuwangi Selatan',
+                'alamat' => 'Jl. Jaksa Agung Soeprapto No. 34, Penganjuran, Kec. Banyuwangi, Kabupaten Banyuwangi, Jawa Timur 68411',
+                'telepon' => '(0333) 421649',
+                'fax' => '(0333) 411993',
+                'email' => 'kph.banyuwangiselatan@perhutani.co.id',
+            ],
+            'Kalibaru' => [
+                'nama' => 'Banyuwangi Selatan',
+                'alamat' => 'Jl. Jaksa Agung Soeprapto No. 34, Penganjuran, Kec. Banyuwangi, Kabupaten Banyuwangi, Jawa Timur 68411',
+                'telepon' => '(0333) 421649',
+                'fax' => '(0333) 411993',
+                'email' => 'kph.banyuwangiselatan@perhutani.co.id',
+            ],
+        ];
+
+        $kph = $daerah ? ($kphData[$daerah] ?? null) : null;
+
+        return view('pages.admin.laporan.pdf', compact('laporan', 'namaPembuat', 'daerah', 'kph'));
     }
 }

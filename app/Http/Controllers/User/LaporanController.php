@@ -31,9 +31,11 @@ class LaporanController extends Controller
     public function create()
     {
         $pegawai = Pegawai::where('user_id', Auth::id())->first();
+        $rph = $pegawai ? $pegawai->rph : null;
         $user = User::all();
 
-        return view('pages.user.laporan.create', compact('pegawai', 'user'));
+        return view('pages.user.laporan.create', compact('pegawai', 'user', 'rph'))
+            ->with('now', now('Asia/Jakarta'));
     }
 
     // Simpan laporan baru
@@ -80,11 +82,13 @@ class LaporanController extends Controller
             return redirect()->back()->with('error', 'Data pegawai tidak ditemukan');
         }
 
+        $rph = $pegawai->rph;
+
         Laporan::create([
             'pegawai_id' => $pegawai->id,
             'tanggal' => $request->tanggal,
             'waktu' => $request->waktu,
-            'sektor' => $request->sektor,
+            'sektor' => $rph ? $rph->sektor : '',
             'petak_hutan' => $request->petak_hutan,
             'uraian_kegiatan' => $request->uraian_kegiatan,
             'dokumentasi' => $path,
@@ -113,7 +117,6 @@ class LaporanController extends Controller
         $request->validate([
             'tanggal' => 'required|date',
             'waktu' => 'required',
-            'sektor' => 'required',
             'petak_hutan' => 'required|string|max:255',
             'uraian_kegiatan' => 'required|string|max:255',
             'dokumentasi' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -155,7 +158,6 @@ class LaporanController extends Controller
         $laporan->update([
             'tanggal' => $request->tanggal,
             'waktu' => $request->waktu,
-            'sektor' => $request->sektor,
             'petak_hutan' => $request->petak_hutan,
             'uraian_kegiatan' => $request->uraian_kegiatan,
             'saksi' => $request->saksi,
