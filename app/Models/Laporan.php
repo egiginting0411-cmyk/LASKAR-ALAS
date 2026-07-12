@@ -24,6 +24,11 @@ class Laporan extends Model
         'tanda_tangan',
     ];
 
+    public function getWaktuAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('H:i');
+    }
+
     // relasi
     public function pegawai()
     {

@@ -30,7 +30,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="card-title fw-semibold mb-0">Laporan</h5>
                     <a href="{{ route('laporan.export', $rph->pegawai_id) }}"
-                        class="btn btn-danger">
+                        class="btn btn-danger" target="_blank">
                         Export PDF
                     </a>
                 </div>
