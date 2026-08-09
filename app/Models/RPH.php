@@ -27,4 +27,9 @@ class RPH extends Model
     {
         return $this->belongsTo(Pegawai::class, 'pegawai_id', 'id');
     }
+
+    public function petak()
+    {
+        return $this->hasMany(Petak::class, 'rph_id');
+    }
 }

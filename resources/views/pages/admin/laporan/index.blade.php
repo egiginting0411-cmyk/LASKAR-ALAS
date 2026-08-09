@@ -117,7 +117,6 @@
                             </tr>
                             @endforelse
                         </tbody>
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -198,7 +197,7 @@
                     if (data.success) {
                         const statusCell = btn.closest('td');
                         if (statusCell) {
-                            statusCell.innerHTML = '<span class="badge bg-success fs-6"><i class="fas fa-check me-1"></i>Divalidasi</span>';
+                            statusCell.innerHTML = '<span class="badge bg-success"><i class="fas fa-check me-1"></i>Divalidasi</span>';
                         }
                         Swal.fire({
                             title: 'Berhasil!',

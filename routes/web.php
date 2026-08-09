@@ -138,6 +138,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::put('/jadwal/{id}', [AdminJadwalController::class, 'update'])->name('jadwalbkph.update');
         Route::delete('/jadwal/{id}', [AdminJadwalController::class, 'delete'])->name('jadwalbkph.delete');
         Route::get('/jadwal/export/pdf', [AdminJadwalController::class, 'exportPdf'])->name('jadwalbkph.exportPdf');
+
+        // Petak
+        Route::get('/petak', [\App\Http\Controllers\Admin\PetakController::class, 'all'])->name('adminpetak.all');
+        Route::get('/rph/{rph}/petak', [\App\Http\Controllers\Admin\PetakController::class, 'index'])->name('adminpetak.index');
+        Route::get('/rph/{rph}/petak/create', [\App\Http\Controllers\Admin\PetakController::class, 'create'])->name('adminpetak.create');
+        Route::post('/rph/{rph}/petak', [\App\Http\Controllers\Admin\PetakController::class, 'store'])->name('adminpetak.store');
+        Route::get('/petak/{petak}/edit', [\App\Http\Controllers\Admin\PetakController::class, 'edit'])->name('adminpetak.edit');
+        Route::put('/petak/{petak}', [\App\Http\Controllers\Admin\PetakController::class, 'update'])->name('adminpetak.update');
+        Route::delete('/petak/{petak}', [\App\Http\Controllers\Admin\PetakController::class, 'delete'])->name('adminpetak.delete');
     });
 });
 

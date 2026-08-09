@@ -52,7 +52,7 @@
                                     No HP: {{ $item->pegawai->rph->no_telp ?? '-' }}
                                 </td>
                                 <td>{{ $item->hari }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                                 <td>{{ $item->waktu }}</td>
                                 <td>{{ $item->kegiatan }}</td>
                                 <td>

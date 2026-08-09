@@ -155,6 +155,14 @@
                             <span class="hide-menu">Jadwal Polhuter</span>
                         </a>
                     </li>
+                    <li class="sidebar-item {{ request()->routeIs('adminpetak.*') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('adminpetak.all') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-map-pin"></i>
+                            </span>
+                            <span class="hide-menu">Kelola Petak</span>
+                        </a>
+                    </li>
                     @endif
                     @endauth
                     
