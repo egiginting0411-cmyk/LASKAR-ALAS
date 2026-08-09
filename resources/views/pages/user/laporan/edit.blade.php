@@ -73,9 +73,15 @@
 
                     <div class="mb-3">
                         <label for="petak_hutan" class="form-label">Petak Hutan</label>
-                        <input type="text" name="petak_hutan" id="petak_hutan"
-                            value="{{ $laporan->petak_hutan }}"
+                        <select name="petak_hutan" id="petak_hutan"
                             class="form-control @error('petak_hutan') is-invalid @enderror" required>
+                            <option value="">-- Pilih Petak --</option>
+                            @foreach ($petakList as $petak)
+                            <option value="{{ $petak->nama_petak }}" {{ $laporan->petak_hutan == $petak->nama_petak ? 'selected' : '' }}>
+                                {{ $petak->nama_petak }}
+                            </option>
+                            @endforeach
+                        </select>
                         @error('petak_hutan')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror

@@ -32,9 +32,10 @@ class LaporanController extends Controller
     {
         $pegawai = Pegawai::where('user_id', Auth::id())->first();
         $rph = $pegawai ? $pegawai->rph : null;
+        $petakList = $rph ? $rph->petak : collect();
         $user = User::all();
 
-        return view('pages.user.laporan.create', compact('pegawai', 'user', 'rph'))
+        return view('pages.user.laporan.create', compact('pegawai', 'user', 'rph', 'petakList'))
             ->with('now', now('Asia/Jakarta'));
     }
 
@@ -105,8 +106,11 @@ class LaporanController extends Controller
     public function edit($id)
     {
         $laporan = Laporan::findOrFail($id);
+        $pegawai = $laporan->pegawai;
+        $rph = $pegawai ? $pegawai->rph : null;
+        $petakList = $rph ? $rph->petak : collect();
         $user = User::all();
-        return view('pages.user.laporan.edit', compact('laporan', 'user'));
+        return view('pages.user.laporan.edit', compact('laporan', 'user', 'petakList'));
     }
 
     // Update laporan
@@ -170,7 +174,10 @@ class LaporanController extends Controller
     // Delete laporan
     public function delete($id)
     {
-        $laporan = Laporan::findOrFail($id);
+        $userId = Auth::id();
+        $laporan = Laporan::whereHas('pegawai', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })->findOrFail($id);
 
         if ($laporan->dokumentasi) {
             Storage::disk('public')->delete($laporan->dokumentasi);

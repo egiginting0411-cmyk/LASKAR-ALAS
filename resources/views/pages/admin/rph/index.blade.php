@@ -59,6 +59,7 @@
                                     <a href="{{ route('adminlaporan.index', $item->id) }}" class="btn btn-sm btn-info">
                                         Lihat Laporan
                                     </a>
+                                </td>
                                 <td>
                                     <!-- Tombol Edit -->
                                     <a href="{{ route('adminrph.edit', ['rph' => $item->id, 'bkph_id' => $bkph->id]) }}"
@@ -76,8 +77,6 @@
                                             Hapus
                                         </button>
                                     </form>
-
-
                                 </td>
                             </tr>
                             @endforeach

@@ -38,7 +38,7 @@
                             @forelse ($laporan as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->tanggal }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                                 <td>{{ $item->waktu }}</td>
                                 <td>{{ $item->sektor }}</td>
 

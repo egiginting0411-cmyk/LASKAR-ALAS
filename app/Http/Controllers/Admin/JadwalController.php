@@ -25,7 +25,9 @@ class JadwalController extends Controller
         $pegawai = Pegawai::with('user')
             ->whereHas('user', function ($query) {
                 $query->where('role', 'user');
-            })->get();
+            })
+            ->whereDoesntHave('jadwal')
+            ->get();
 
         return view('pages.admin.jadwal.create', compact('pegawai'));
     }

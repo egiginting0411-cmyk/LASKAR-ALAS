@@ -49,7 +49,7 @@
                             @forelse ($laporan as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->tanggal }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                                 <td>{{ $item->waktu }}</td>
                                 <td>{{ $item->sektor }}</td>
                                 <td>{{ $item->petak_hutan ?? '-' }}</td>
@@ -113,16 +113,10 @@
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('laporan.delete', $item->id) }}"
-                                        method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Yakin hapus data?')">
-                                            Hapus
-                                        </button>
-                                    </form>
+                                    <button class="btn btn-sm btn-danger btn-hapus"
+                                        data-id="{{ $item->id }}">
+                                        Hapus
+                                    </button>
                                 </td>
                             </tr>
                             @empty
@@ -156,6 +150,59 @@
     function previewImage(src) {
         document.getElementById('previewImage').src = src;
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('success'))
+        Swal.fire({
+            title: 'Berhasil!',
+            text: '{{ session("success") }}',
+            icon: 'success',
+            confirmButtonColor: '#06923E',
+            timer: 3000,
+            timerProgressBar: true
+        });
+        @endif
+
+        document.querySelectorAll('.btn-hapus').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const laporanId = this.dataset.id;
+
+                Swal.fire({
+                    title: 'Hapus Laporan',
+                    text: "Apakah Anda yakin ingin menghapus laporan ini? Data yang dihapus tidak dapat dikembalikan.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: '<i class="fas fa-trash me-1"></i>Ya, Hapus!',
+                    cancelButtonText: '<i class="fas fa-times me-1"></i>Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = "{{ route('laporan.delete', ':id') }}".replace(':id', laporanId);
+
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = '_token';
+                        csrfInput.value = '{{ csrf_token() }}';
+                        form.appendChild(csrfInput);
+
+                        const methodInput = document.createElement('input');
+                        methodInput.type = 'hidden';
+                        methodInput.name = '_method';
+                        methodInput.value = 'DELETE';
+                        form.appendChild(methodInput);
+
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
 </script>
 
 @endsection
