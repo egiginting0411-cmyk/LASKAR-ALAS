@@ -109,6 +109,7 @@
 
                                 {{-- AKSI --}}
                                 <td>
+                                    @if ($item->status !== 'divalidasi')
                                     <a href="{{ route('laporan.edit', $item->id) }}" class="btn btn-sm btn-warning">
                                         Edit
                                     </a>
@@ -117,6 +118,9 @@
                                         data-id="{{ $item->id }}">
                                         Hapus
                                     </button>
+                                    @else
+                                    <span class="badge bg-success">Terkunci</span>
+                                    @endif
                                 </td>
                             </tr>
                             @empty
@@ -158,6 +162,17 @@
             text: '{{ session("success") }}',
             icon: 'success',
             confirmButtonColor: '#06923E',
+            timer: 3000,
+            timerProgressBar: true
+        });
+        @endif
+
+        @if (session('error'))
+        Swal.fire({
+            title: 'Gagal!',
+            text: '{{ session("error") }}',
+            icon: 'error',
+            confirmButtonColor: '#dc3545',
             timer: 3000,
             timerProgressBar: true
         });
