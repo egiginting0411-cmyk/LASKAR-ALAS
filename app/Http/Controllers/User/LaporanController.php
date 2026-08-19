@@ -106,6 +106,12 @@ class LaporanController extends Controller
     public function edit($id)
     {
         $laporan = Laporan::findOrFail($id);
+
+        if ($laporan->status === 'divalidasi') {
+            return redirect()->route('laporan.index')
+                ->with('error', 'Laporan yang sudah divalidasi tidak dapat diedit.');
+        }
+
         $pegawai = $laporan->pegawai;
         $rph = $pegawai ? $pegawai->rph : null;
         $petakList = $rph ? $rph->petak : collect();
@@ -117,6 +123,11 @@ class LaporanController extends Controller
     public function update(Request $request, $id)
     {
         $laporan = Laporan::findOrFail($id);
+
+        if ($laporan->status === 'divalidasi') {
+            return redirect()->route('laporan.index')
+                ->with('error', 'Laporan yang sudah divalidasi tidak dapat diedit.');
+        }
 
         $request->validate([
             'tanggal' => 'required|date',
@@ -178,6 +189,11 @@ class LaporanController extends Controller
         $laporan = Laporan::whereHas('pegawai', function ($q) use ($userId) {
             $q->where('user_id', $userId);
         })->findOrFail($id);
+
+        if ($laporan->status === 'divalidasi') {
+            return redirect()->route('laporan.index')
+                ->with('error', 'Laporan yang sudah divalidasi tidak dapat dihapus.');
+        }
 
         if ($laporan->dokumentasi) {
             Storage::disk('public')->delete($laporan->dokumentasi);
